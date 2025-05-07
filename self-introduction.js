@@ -1,0 +1,142 @@
+const addButton = document.getElementById("add-button");
+const todoTable = document.getElementById("todo-table").getElementsByTagName('tbody')[0];
+const searchButton = document.getElementById("search-button");
+const filterResetButton = document.getElementById("filter-reset-button");
+
+let originalRows = [];
+
+function isValidInput(text) {
+    return /^[\w\sぁ-んァ-ヶー一-龥]+$/.test(text);
+}
+
+addButton.addEventListener("click", function () {
+    createRow();
+});
+
+const createRow = () => {
+    const todoInput = document.getElementById("todo-input");
+    const errorMessage = document.getElementById("error-message");
+    const text = todoInput.value.trim();
+
+    errorMessage.textContent = "";
+
+    if (text === "") {
+        errorMessage.textContent = "必須入力欄です";
+        return;
+    }
+
+    if (!isValidInput(text)) {
+        errorMessage.textContent = "記号（？！など）は使用できません";
+        return;
+    }
+
+    const row = todoTable.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+
+    cell1.textContent = text;
+    todoInput.value = "";
+
+    createDeleteEvent(row, cell2);
+};
+
+const createDeleteEvent = (row, cell2) => {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "削除";
+    deleteBtn.addEventListener("click", function () {
+        todoTable.deleteRow(row.rowIndex - 1);
+    });
+    cell2.appendChild(deleteBtn);
+};
+
+searchButton.addEventListener("click", function () {
+    const searchInput = document.getElementById("search-input");
+    const searchError = document.getElementById("search-error");
+    const keyword = searchInput.value.trim();
+
+    searchError.textContent = "";
+
+    if (keyword === "") {
+        searchError.textContent = "必須入力欄です";
+        return;
+    }
+
+    if (!isValidInput(keyword)) {
+        searchError.textContent = "記号（？！など）は使用できません";
+        return;
+    }
+    originalRows = [];
+    const allRows = todoTable.getElementsByTagName("tr");
+    for (let row of allRows) {
+        originalRows.push(row);
+    }
+
+
+    const normalize = str => str.replace(/\s/g, "").toLowerCase();
+    const rows = todoTable.getElementsByTagName("tr");
+
+    const storeOriginalRows = () => {
+        const rows = todoTable.getElementsByTagName("tr");
+        originalRows = [];
+        for (let row of rows) {
+            originalRows.push(row);
+
+        }
+    };
+
+    for (let row of rows) {
+        const cellText = row.cells[0].textContent;
+        const isMatch = normalize(cellText).includes(normalize(keyword));
+        row.style.display = isMatch ? "" : "none";
+    }
+});
+
+filterResetButton.addEventListener("click", function () {
+    const rows = todoTable.getElementsByTagName("tr");
+
+    for (let row of originalRows) {
+        row.style.display = "";
+    }
+
+    document.getElementById("search-input").value = "";
+    document.getElementById("search-error").textContent = "";
+});
+
+const today = new Date();
+const day = today.getDay();
+const days = ["日", "月", "火", "水", "木", "金", "土"];
+console.log("今日は" + days[day] + "曜日です");
+
+const body = document.body;
+const messageDiv = document.createElement("div");
+document.body.appendChild(messageDiv);
+
+switch (day) {
+    case 0:
+        body.style.backgroundColor = "pink";
+        messageDiv.textContent = "休日は何をしますか？";
+        break;
+    case 1:
+        body.style.backgroundColor = "lightblue";
+        messageDiv.textContent = "今週も頑張ろう！";
+        break;
+    case 2:
+        body.style.backgroundColor = "yellow";
+        messageDiv.textContent = "今日はどんな天気ですか？";
+        break;
+    case 3:
+        body.style.backgroundColor = "lightgreen";
+        messageDiv.textContent = "週の真ん中水曜日！";
+        break;
+    case 4:
+        body.style.backgroundColor = "purple";
+        messageDiv.textContent = "まだ木曜日だからって落ち込まないで！がんばろう！";
+        break;
+    case 5:
+        body.style.backgroundColor = "gold";
+        messageDiv.textContent = "一週間おつかれさま！自分にご褒美あげてね！";
+        break;
+    default:
+        body.style.backgroundColor = "white";
+        messageDiv.textContent = `${days[day]}曜日です今日も楽しもうね！`;
+}

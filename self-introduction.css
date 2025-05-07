@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Hiragino Kaku Gothic ProN W3', sans-serif;
+    background-color:lightgray;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color:lightpink;
+    color:grey;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+.top-wrapper {
+    padding: 20px;
+    text-align: center;
+}
+
+.name h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color:grey;
+}
+
+.name p {
+    font-size: 1.2em;
+    color:grey;
+}
+
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.info-icon {
+    background-color:azure;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.info-icon:hover {
+    transform: translateY(-5px);
+}
+
+.info-icon img {
+    max-width: 50px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.info-text h3 {
+    font-size: 1.3em;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.info-text p, .info-text ul {
+    font-size: 1em;
+    color: #555;
+}
+
+.info-text li {
+    list-style: none;
+}
+
+
+.personality {
+    background-color:azure;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.personality h4 {
+    font-size: 1.5em;
+    color:lightpink;
+    margin-bottom: 10px;
+}
+
+.personality p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.message {
+    background-color: azure;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message h4 {
+    font-size: 1.5em;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.message p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+footer {
+    background-color:mistyrose;
+    color:grey;
+    text-align: center;
+    font-size: 30px;
+    height: 100px;
+}
+
+.aisatsu h5 {
+    font-size: 30px;
+    padding-top: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-icon {
+        width: 80%;
+        margin: 10px 0;
+    }
+}
+
+.todo-section {
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-section h2 {
+    font-size: 1.5em;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.form-area {
+    margin-bottom: 15px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+}
+
