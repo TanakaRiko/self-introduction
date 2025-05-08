@@ -1,0 +1,152 @@
+export {};
+
+let addButton = document.getElementById('addButton') as HTMLButtonElement | null;
+const todoTable = (document.getElementById("todo-table") as HTMLTableElement)?.getElementsByTagName("tbody")[0];
+const searchButton = document.getElementById("search-button") as HTMLButtonElement | null;
+const filterResetButton = document.getElementById("filter-reset-button") as HTMLButtonElement | null;
+
+let originalRows: HTMLTableRowElement[] = [];
+
+function isValidInput(text: string): boolean {
+    return /^[\w\sぁ-んァ-ヶー一-龥]+$/.test(text);
+}
+
+if (addButton !== null) {
+    addButton.addEventListener("click", function () {
+        createRow();
+    });
+} else {
+    console.log("addButtonが見つかりませんでした");
+}
+
+function createRow(): void {
+    const todoInput = document.getElementById("todo-input") as HTMLInputElement | null;
+    const errorMessage = document.getElementById("error-message") as HTMLElement;
+
+    if (todoInput === null) {
+        console.error('todoInput 要素が見つかりません');
+        return;
+    }
+
+    const text: string = todoInput.value.trim();
+    console.log(text);
+
+    errorMessage.textContent = "";
+
+    if (text === "") {
+        errorMessage.textContent = "必須入力欄です";
+        return;
+    }
+
+    if (!isValidInput(text)) {
+        errorMessage.textContent = "記号（？！など）は使用できません";
+        return;
+    }
+
+    const row = todoTable.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+
+    cell1.textContent = text;
+    todoInput.value = "";
+
+    createDeleteEvent(row, cell2);
+}
+
+const createDeleteEvent = (row: HTMLTableRowElement, cell2: HTMLTableCellElement): void => {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "削除";
+    deleteBtn.addEventListener("click", function () {
+        todoTable.deleteRow(row.rowIndex - 1);
+    });
+    cell2.appendChild(deleteBtn);
+};
+
+if (searchButton !== null) {
+    searchButton.addEventListener("click", function () {
+        const searchInput = document.getElementById("search-input") as HTMLInputElement;
+        const searchError = document.getElementById("search-error") as HTMLElement;
+        const keyword = searchInput.value.trim();
+
+        searchError.textContent = "";
+
+        if (keyword === "") {
+            searchError.textContent = "必須入力欄です";
+            return;
+        }
+
+        if (!isValidInput(keyword)) {
+            searchError.textContent = "記号（？！など）は使用できません";
+            return;
+        }
+
+        originalRows = [];
+        const allRows = todoTable.getElementsByTagName("tr");
+        for (let row of allRows) {
+            originalRows.push(row);
+        }
+
+        const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+        const rows = todoTable.getElementsByTagName("tr");
+
+        for (let row of rows) {
+            const cellText = row.cells[0].textContent || "";
+            const isMatch = normalize(cellText).includes(normalize(keyword));
+            row.style.display = isMatch ? "" : "none";
+        }
+    });
+}
+
+if (filterResetButton !== null) {
+    filterResetButton.addEventListener("click", function () {
+        const rows = todoTable.getElementsByTagName("tr");
+
+        for (let row of originalRows) {
+            row.style.display = "";
+        }
+
+        const searchInput = document.getElementById("search-input") as HTMLInputElement;
+        const searchError = document.getElementById("search-error") as HTMLElement;
+        searchInput.value = "";
+        searchError.textContent = "";
+    });
+}
+
+const today = new Date();
+const day = today.getDay();
+const days = ["日", "月", "火", "水", "木", "金", "土"];
+console.log("今日は" + days[day] + "曜日です");
+
+const body = document.body;
+const messageDiv = document.createElement("div");
+document.body.appendChild(messageDiv);
+
+switch (day) {
+    case 0:
+        body.style.backgroundColor = "pink";
+        messageDiv.textContent = "休日は何をしますか？";
+        break;
+    case 1:
+        body.style.backgroundColor = "lightblue";
+        messageDiv.textContent = "今週も頑張ろう！";
+        break;
+    case 2:
+        body.style.backgroundColor = "yellow";
+        messageDiv.textContent = "今日はどんな天気ですか？";
+        break;
+    case 3:
+        body.style.backgroundColor = "lightgreen";
+        messageDiv.textContent = "週の真ん中水曜日！";
+        break;
+    case 4:
+        body.style.backgroundColor = "purple";
+        messageDiv.textContent = "まだ木曜日だからって落ち込まないで！がんばろう！";
+        break;
+    case 5:
+        body.style.backgroundColor = "gold";
+        messageDiv.textContent = "一週間おつかれさま！自分にご褒美あげてね！";
+        break;
+    default:
+        body.style.backgroundColor = "white";
+        messageDiv.textContent = `${days[day]}曜日です今日も楽しもうね！`;
+}
