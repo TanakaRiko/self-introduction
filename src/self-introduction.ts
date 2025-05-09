@@ -1,5 +1,9 @@
 export {};
 
+function truncateText(text: string): string {
+    return text.length > 10 ? text.substring(0, 10) + "..." : text;
+}
+
 let addButton = document.getElementById('addButton') as HTMLButtonElement | null;
 const todoTable = (document.getElementById("todo-table") as HTMLTableElement)?.getElementsByTagName("tbody")[0];
 const searchButton = document.getElementById("search-button") as HTMLButtonElement | null;
@@ -47,7 +51,7 @@ function createRow(): void {
     const cell1 = row.insertCell(0);
     const cell2 = row.insertCell(1);
 
-    cell1.textContent = text;
+   cell1.textContent = truncateText(text);
     todoInput.value = "";
 
     createDeleteEvent(row, cell2);

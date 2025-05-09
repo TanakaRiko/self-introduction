@@ -1,4 +1,7 @@
 var _a;
+function truncateText(text) {
+    return text.length > 10 ? text.substring(0, 10) + "..." : text;
+}
 let addButton = document.getElementById('addButton');
 const todoTable = (_a = document.getElementById("todo-table")) === null || _a === void 0 ? void 0 : _a.getElementsByTagName("tbody")[0];
 const searchButton = document.getElementById("search-button");
@@ -36,7 +39,7 @@ function createRow() {
     const row = todoTable.insertRow();
     const cell1 = row.insertCell(0);
     const cell2 = row.insertCell(1);
-    cell1.textContent = text;
+    cell1.textContent = truncateText(text);
     todoInput.value = "";
     createDeleteEvent(row, cell2);
 }
