@@ -62,6 +62,10 @@ const createDeleteEvent = (row: HTMLTableRowElement, cell2: HTMLTableCellElement
     cell2.appendChild(deleteBtn);
 };
 
+const normalize = (str: string): string => {
+    return str.replace(/\s/g, "").toLowerCase();
+};
+
 if (searchButton !== null) {
     searchButton.addEventListener("click", function () {
         const searchInput = document.getElementById("search-input") as HTMLInputElement;
@@ -81,19 +85,18 @@ if (searchButton !== null) {
         }
 
         originalRows = [];
-        const allRows = todoTable.getElementsByTagName("tr");
-        for (let row of allRows) {
+
+        const allRowsArray = Array.from(todoTable.getElementsByTagName("tr"));
+        for (let row of allRowsArray) {
             originalRows.push(row);
         }
 
-        const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
-        const rows = todoTable.getElementsByTagName("tr");
-
-        for (let row of rows) {
+        const rowsArray = Array.from(todoTable.getElementsByTagName("tr"));
+        rowsArray.forEach(row => {
             const cellText = row.cells[0].textContent || "";
             const isMatch = normalize(cellText).includes(normalize(keyword));
             row.style.display = isMatch ? "" : "none";
-        }
+        });
     });
 }
 
@@ -119,6 +122,12 @@ console.log("今日は" + days[day] + "曜日です");
 
 const body = document.body;
 const messageDiv = document.createElement("div");
+messageDiv.style.padding = "20px";
+messageDiv.style.fontSize = "1.2em";
+messageDiv.style.textAlign = "center";
+messageDiv.style.fontWeight = "bold";
+messageDiv.style.backgroundColor = "rgba(255, 255, 255, 0.6)";
+messageDiv.style.marginTop = "20px";
 document.body.appendChild(messageDiv);
 
 switch (day) {
