@@ -1,10 +1,9 @@
-export {};
 
 function truncateText(text: string): string {
     return text.length > 10 ? text.substring(0, 10) + "..." : text;
 }
 
-let addButton = document.getElementById('addButton') as HTMLButtonElement | null;
+let addButton = document.getElementById('add-button') as HTMLButtonElement | null;
 const todoTable = (document.getElementById("todo-table") as HTMLTableElement)?.getElementsByTagName("tbody")[0];
 const searchButton = document.getElementById("search-button") as HTMLButtonElement | null;
 const filterResetButton = document.getElementById("filter-reset-button") as HTMLButtonElement | null;
@@ -20,7 +19,7 @@ if (addButton !== null) {
         createRow();
     });
 } else {
-    console.log("addButtonが見つかりませんでした");
+    console.log("add-buttonが見つかりませんでした");
 }
 
 function createRow(): void {

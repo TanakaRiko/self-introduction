@@ -1,8 +1,9 @@
+"use strict";
 var _a;
 function truncateText(text) {
     return text.length > 10 ? text.substring(0, 10) + "..." : text;
 }
-let addButton = document.getElementById('addButton');
+let addButton = document.getElementById('add-button');
 const todoTable = (_a = document.getElementById("todo-table")) === null || _a === void 0 ? void 0 : _a.getElementsByTagName("tbody")[0];
 const searchButton = document.getElementById("search-button");
 const filterResetButton = document.getElementById("filter-reset-button");
@@ -16,7 +17,7 @@ if (addButton !== null) {
     });
 }
 else {
-    console.log("addButtonが見つかりませんでした");
+    console.log("add-buttonが見つかりませんでした");
 }
 function createRow() {
     const todoInput = document.getElementById("todo-input");
@@ -135,4 +136,3 @@ switch (day) {
         body.style.backgroundColor = "white";
         messageDiv.textContent = `${days[day]}曜日です今日も楽しもうね！`;
 }
-export {};
